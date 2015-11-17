@@ -19,6 +19,7 @@ describe Till do
   end
 
   context '#add_to_order' do
+
     it 'adds item to order' do
       till.add_to_order(1, 'Cappucino')
       expect(till.order).to eq( {Cappucino: 1} )
@@ -34,14 +35,15 @@ describe Till do
 
     it 'returns total of order' do
       allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
-      expect(till.calculate_total).to be 16.80
+      till.calculate_total
+      expect(till.total).to be 16.80
     end
   end
 
   context '#calculate_tax' do
 
     it 'returns total tax of order' do
-      allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
+      allow(till).to receive(:total) { 16.80 }
       expect(till.calculate_tax).to be 1.45
     end
   end
@@ -49,8 +51,23 @@ describe Till do
   context '#calculate_change' do
 
     it 'returns change due' do
-      allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
+      allow(till).to receive(:total) {16.80}
       expect(till.calculate_change(20)).to be 3.2
+    end
+  end
+
+  context '#calculate_discount' do
+
+    it 'discounts 5% for orders over £50' do
+      allow(till).to receive(:total) {75}
+      till.calculate_discount
+      expect(till.discount).to be 3.75
+    end
+
+    it 'discounts 10% for muffins' do
+      allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
+      till.calculate_discount
+      expect(till.discount).to be 0.91
     end
   end
 
