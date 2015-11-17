@@ -8,7 +8,7 @@ class Till
     @order = {}
   end
 
-  def show_price item
+  def show_price(item)
     self.shop_info[0]['prices'][0][item]
   end
 
@@ -25,6 +25,10 @@ class Till
 
   def calculate_tax
     (self.calculate_total * 0.0864).round(2)
+  end
+
+  def calculate_change(payment)
+    (payment - self.calculate_total).round(2)
   end
 
 end

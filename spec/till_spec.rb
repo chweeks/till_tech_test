@@ -46,4 +46,12 @@ describe Till do
     end
   end
 
+  context '#calculate_change' do
+
+    it 'returns change due' do
+      allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
+      expect(till.calculate_change(20)).to be 3.2
+    end
+  end
+
 end
