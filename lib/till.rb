@@ -23,4 +23,8 @@ class Till
     end
   end
 
+  def calculate_tax
+    (self.calculate_total * 0.0864).round(2)
+  end
+
 end

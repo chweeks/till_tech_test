@@ -38,4 +38,12 @@ describe Till do
     end
   end
 
+  context '#calculate_tax' do
+
+    it 'returns total tax of order' do
+      allow(till).to receive(:order) { {Cappucino: 2, "Muffin Of The Day": 2} }
+      expect(till.calculate_tax).to be 1.45
+    end
+  end
+
 end
